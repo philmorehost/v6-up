@@ -15,7 +15,7 @@ body {
     min-width: 0; /* Prevents flexbox overflow */
 }
 
-.sidebar {
+.dashboard-container .sidebar {
     width: 350px;
     flex-shrink: 0;
 }
@@ -68,6 +68,12 @@ body {
 .currency-selector .currency-tab.active {
     background-color: #fff;
     color: #000;
+}
+
+.currency-flag {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
 }
 
 .balance-card {
@@ -360,4 +366,11 @@ body {
 .status-badge.status-cancelled {
     background-color: #f8d7da;
     color: #842029;
+}
+
+.account-details {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
 }
