@@ -5,14 +5,14 @@ if (in_array($purchase_method, $purchase_method_array)) {
     if ($purchase_method === "WEB") {
         $epp = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($_POST["epp"]))));
         $card_type = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($_POST["quantity"]))));
-        $quantity = 1;
+        $quantity = mysqli_real_escape_string($connection_server, preg_replace("/[^0-9.]+/", "", trim(strip_tags($_POST["qty_number"]))));
 
     }
 
     if (in_array($purchase_method, array("API", "APP"))) {
         $epp = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($get_api_post_info["type"]))));
         $card_type = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($get_api_post_info["quantity"]))));
-        $quantity = 1;
+        $quantity = mysqli_real_escape_string($connection_server, preg_replace("/[^0-9.]+/", "", trim(strip_tags($get_api_post_info["qty_number"]))));
     }
     //$discounted_amount = $amount;
     $type_alternative = ucwords($epp . " exam");
