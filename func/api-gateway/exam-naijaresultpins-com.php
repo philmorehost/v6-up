@@ -1,72 +1,49 @@
 <?php
-$exam_service_provider_alter_code = array("waec" => "waec", "neco" => "neco", "nabteb" => "nabteb", "jamb" => "jamb");
-if (in_array($product_name, array_keys($exam_service_provider_alter_code))) {
-	if ($product_name == "waec") {
-		$web_exam_size_array = array("result_checker" => "1");
-	} else {
-		if ($product_name == "neco") {
-			$web_exam_size_array = array("result_checker" => "2");
-		} else {
-			if ($product_name == "nabteb") {
-				$web_exam_size_array = array("result_checker" => "3");
-			} else {
-				if ($product_name == "jamb") {
-					$web_exam_size_array = array();
-				}
-			}
-		}
-	}
+$exam_service_provider_alter_code = array("waec" => "1", "neco" => "2", "nabteb" => "3");
+if (array_key_exists($product_name, $exam_service_provider_alter_code)) {
+    $card_type_id = $exam_service_provider_alter_code[$product_name];
+    $curl_url = "https://" . $api_detail["api_base_url"] . "/api/v1/exam-card/buy";
+    $curl_request = curl_init($curl_url);
+    curl_setopt($curl_request, CURLOPT_POST, true);
+    curl_setopt($curl_request, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl_request, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($curl_request, CURLOPT_SSL_VERIFYPEER, false);
+    $curl_http_headers = array("Authorization: Bearer " . $api_detail["api_key"], "Content-Type: application/json");
+    curl_setopt($curl_request, CURLOPT_HTTPHEADER, $curl_http_headers);
+    $curl_postfields_data = json_encode(array("card_type_id" => $card_type_id, "quantity" => $quantity), true);
+    curl_setopt($curl_request, CURLOPT_POSTFIELDS, $curl_postfields_data);
+    $curl_result = curl_exec($curl_request);
+    $curl_json_result = json_decode($curl_result, true);
 
-	if (in_array($quantity, array_keys($web_exam_size_array))) {
-		$curl_url = "https://" . $api_detail["api_base_url"] . "/api/v1/exam-card/buy";
-		$curl_request = curl_init($curl_url);
-		curl_setopt($curl_request, CURLOPT_POST, true);
-		curl_setopt($curl_request, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl_request, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl_request, CURLOPT_SSL_VERIFYPEER, false);
-		$curl_http_headers = array("Authorization: Bearer " . $api_detail["api_key"], "Content-Type: application/json");
-		curl_setopt($curl_request, CURLOPT_HTTPHEADER, $curl_http_headers);
-		$naijaresultpins_reference = substr(str_shuffle("12345678901234567890"), 0, 15);
-		$curl_postfields_data = json_encode(array("card_type_id" => $web_exam_size_array[$quantity], "quantity" => 1), true);
-		curl_setopt($curl_request, CURLOPT_POSTFIELDS, $curl_postfields_data);
-		$curl_result = curl_exec($curl_request);
-		$curl_json_result = json_decode($curl_result, true);
-
-
-		if (curl_errno($curl_request)) {
-			$api_response = "failed";
-			$api_response_text = 1;
-			$api_response_description = "";
-			$api_response_status = 3;
-		}
-
-		if ($curl_json_result["status"] === true && in_array($curl_json_result["code"], array("000"))) {
-			$api_response = "successful";
-			$api_response_reference = $curl_json_result["reference"];
-			$api_response_text = $curl_json_result["status"];
-			$api_response_description = "Transaction Successful | PIN: " . $curl_json_result["cards"][0]["pin"].", Serial No: ".$curl_json_result["cards"][0]["serial_no"];
-			$api_response_status = 1;
-		}
-
-		if (!in_array($curl_json_result["code"], array("000"))) {
-			$api_response = "failed";
-			$api_response_text = $curl_json_result["status"];
-			$api_response_description = "Transaction Failed";
-			$api_response_status = 3;
-		}
-	} else {
-		//Exam size not available
-		$api_response = "failed";
-		$api_response_text = "";
-		$api_response_description = "";
-		$api_response_status = 3;
-	}
+    if (curl_errno($curl_request)) {
+        $api_response = "failed";
+        $api_response_text = curl_error($curl_request);
+        $api_response_description = "Curl Error";
+        $api_response_status = 3;
+    } else {
+        if (isset($curl_json_result["status"]) && $curl_json_result["status"] === true && $curl_json_result["code"] == "000") {
+            $api_response = "successful";
+            $api_response_reference = $curl_json_result["reference"];
+            $api_response_text = $curl_json_result["message"];
+            $cards = [];
+            foreach ($curl_json_result["cards"] as $card) {
+                $cards[] = "PIN: " . $card["pin"] . ", Serial No: " . $card["serial_no"];
+            }
+            $api_response_description = "Transaction Successful | " . implode(" | ", $cards);
+            $api_response_status = 1;
+        } else {
+            $api_response = "failed";
+            $api_response_text = isset($curl_json_result["message"]) ? $curl_json_result["message"] : "Unknown Error";
+            $api_response_description = "Transaction Failed";
+            $api_response_status = 3;
+        }
+    }
+    curl_close($curl_request);
 } else {
-	//Service not available
-	$api_response = "failed";
-	$api_response_text = "";
-	$api_response_description = "Service not available";
-	$api_response_status = 3;
+    //Service not available
+    $api_response = "failed";
+    $api_response_text = "";
+    $api_response_description = "Service not available";
+    $api_response_status = 3;
 }
-curl_close($curl_request);
 ?>

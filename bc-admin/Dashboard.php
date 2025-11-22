@@ -439,42 +439,45 @@
     <div class="col-12">
       <!-- Col -->
       <div class="col-12 col-lg-12">
-        <div class="card info-card sales-card p-3 align-items-center">
-              <div class="card-body col-12 align-items-center">
-                	<h5 class="card-title">
-                    Auto Funding
-                  </h5>
-                		<?php
-                		  foreach (getUserVirtualBank() as $bank_accounts_json) {
-                  			$bank_accounts_json = json_decode($bank_accounts_json, true);
-                  			if (in_array($bank_accounts_json["bank_code"], array("110072", "232"))) {
-                  				$virtual_account_vaccount_err .=
-                  					'<div style="" class="bg-white">
-                  					    <div style="" class="bg-success d-inline-block rounded-2 rounded-bottom-0 col-12 px-2 py-2 mt-0">
-                      					 <h5 class="text-white">
-                                    ' . strtoupper($bank_accounts_json["account_name"]) . '
-                                  </h5>
-                                </div>
-                                <div style="" class="bg-light d-flex rounded-2 rounded-top-0 col-12 px-2 py-1 mt-0 justify-content-center justify-content-between">
-                          					<div class="row">
-                          						<div style="user-select: auto;" class="d-inline-block text-success h5 mt-2">' . strtoupper($bank_accounts_json["bank_name"]) . '</div><br>
-                          						<div style="user-select: auto;" class="d-inline-block text-success h3 mt-1">' . $bank_accounts_json["account_number"] . ' <span onclick="copyText(`Account number copied successfully`,`' . $bank_accounts_json["account_number"] . '`);" class="p-1 card-icon rounded-circle"><i title="Copy Account Number" class="bi bi-copy h3 text-success" ></i></span></div>
-                        						</div>
-                        						<div class="row">
-                        						<div style="user-select: auto;" class="col-12 d-inline-block text-success h5 mt-2 text-end">Charges<br/><h2>#50</h2></div>
-                        						</div>
-                        						
-                        				</div>
-                        				<div style="user-select: auto;" class="col-12 d-inline-block text-success fw-bold text-end mt-1 text-decoration-underline">View More</div>
-                  					</div>';
-                  			}
-                  		}
-                		?><br>
-                		<?php
-                		  echo $virtual_account_vaccount_err;
-                		?>
-              </div>
-          </div>
+        <div class="card info-card sales-card p-3">
+            <div class="card-body">
+                <h5 class="card-title">Auto Funding</h5>
+                <div class="d-flex overflow-auto">
+                    <?php
+                      foreach (getUserVirtualBank() as $bank_accounts_json) {
+                          $bank_accounts_json = json_decode($bank_accounts_json, true);
+                          if (in_array($bank_accounts_json["bank_code"], array("110072", "232"))) {
+                              echo '
+                                  <div class="card me-3" style="min-width: 300px;">
+                                      <div class="card-header bg-success text-white">
+                                          <h5 class="card-title text-white mb-0">' . strtoupper($bank_accounts_json["account_name"]) . '</h5>
+                                      </div>
+                                      <div class="card-body">
+                                          <div class="d-flex justify-content-between align-items-center mt-3">
+                                              <div>
+                                                  <p class="mb-0 text-success fw-bold">' . strtoupper($bank_accounts_json["bank_name"]) . '</p>
+                                                  <h4 class="mb-0 text-success">' . $bank_accounts_json["account_number"] . '
+                                                      <span onclick="copyText(\'Account number copied successfully\', \'' . $bank_accounts_json["account_number"] . '\');" class="p-1 card-icon rounded-circle" style="cursor: pointer;">
+                                                          <i title="Copy Account Number" class="bi bi-copy h5 text-success"></i>
+                                                      </span>
+                                                  </h4>
+                                              </div>
+                                              <div class="text-end">
+                                                  <p class="mb-0 text-success">Charges</p>
+                                                  <h4 class="text-success">#50</h4>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="card-footer">
+                                          <a href="#" class="text-success fw-bold text-decoration-underline">View More</a>
+                                      </div>
+                                  </div>';
+                          }
+                      }
+                    ?>
+                </div>
+            </div>
+        </div>
       </div>
       <!-- Col End -->
     

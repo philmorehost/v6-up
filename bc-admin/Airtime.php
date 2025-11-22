@@ -1,5 +1,31 @@
 <?php session_start();
     include("../func/bc-admin-config.php");
+
+    if(isset($_GET["action"]) && isset($_GET["product_id"]) && isset($_GET["api_id"])){
+        $action = mysqli_real_escape_string($connection_server, trim(strip_tags($_GET["action"])));
+        $product_id = mysqli_real_escape_string($connection_server, trim(strip_tags($_GET["product_id"])));
+        $api_id = mysqli_real_escape_string($connection_server, trim(strip_tags($_GET["api_id"])));
+        $pricing_tables = ['sas_smart_parameter_values', 'sas_agent_parameter_values', 'sas_api_parameter_values'];
+
+        if($action == "enable" || $action == "disable"){
+            $new_status = ($action == "enable") ? 1 : 0;
+            foreach($pricing_tables as $table){
+                mysqli_query($connection_server, "UPDATE $table SET status='$new_status' WHERE vendor_id='".$get_logged_admin_details["id"]."' && product_id='$product_id' && api_id='$api_id'");
+            }
+            $_SESSION["product_purchase_response"] = "Package status updated successfully.";
+
+        } elseif($action == "delete"){
+            foreach($pricing_tables as $table){
+                mysqli_query($connection_server, "DELETE FROM $table WHERE vendor_id='".$get_logged_admin_details["id"]."' && product_id='$product_id' && api_id='$api_id'");
+            }
+            $_SESSION["product_purchase_response"] = "Package deleted successfully.";
+
+        } else {
+            $_SESSION["product_purchase_response"] = "Invalid action.";
+        }
+        header("Location: Airtime.php");
+        exit();
+    }
         
     if(isset($_POST["update-key"])){
         $api_id = mysqli_real_escape_string($connection_server, trim(strip_tags($_POST["api-id"])));
@@ -321,7 +347,7 @@
                   <table style="" class="table table-responsive table-striped table-bordered" title="Horizontal Scroll: Shift + Mouse Scroll Button">
                     <thead class="thead-dark">
                       <tr>
-                          <th>Product Name</th><th>Smart Earner</th><th>Agent Vendor</th><th>API Vendor</th>
+                          <th>Product Name</th><th>Smart Earner</th><th>Agent Vendor</th><th>API Vendor</th><th>Status</th><th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -338,6 +364,16 @@
                                 
                                 if((mysqli_num_rows($get_api_lists) == 1) && (mysqli_num_rows($product_smart_table) > 0) && (mysqli_num_rows($product_agent_table) > 0) && (mysqli_num_rows($product_api_table) > 0)){
                                     while(($product_smart_details = mysqli_fetch_assoc($product_smart_table)) && ($product_agent_details = mysqli_fetch_assoc($product_agent_table)) && ($product_api_details = mysqli_fetch_assoc($product_api_table))){
+                                        // Determine status and actions
+                                        $status_text = ($product_smart_details['status'] == 1) ? '<span class="text-success">Enabled</span>' : '<span class="text-secondary">Disabled</span>';
+                                        $actions = '';
+                                        if ($product_smart_details['status'] == 1) {
+                                            $actions .= '<a href="Airtime.php?action=disable&product_id='.$product_smart_details["product_id"].'&api_id='.$product_smart_details["api_id"].'" class="btn btn-warning btn-sm mb-1 d-block">Disable</a> ';
+                                        } else {
+                                            $actions .= '<a href="Airtime.php?action=enable&product_id='.$product_smart_details["product_id"].'&api_id='.$product_smart_details["api_id"].'" class="btn btn-success btn-sm mb-1 d-block">Enable</a> ';
+                                        }
+                                        $actions .= '<a href="Airtime.php?action=delete&product_id='.$product_smart_details["product_id"].'&api_id='.$product_smart_details["api_id"].'" class="btn btn-danger btn-sm d-block" onclick="return confirm(\'Are you sure you want to delete this package? This action cannot be undone.\');">Delete</a>';
+
                                         echo 
                                             '<tr style="background-color: transparent !important;">
                                                 <td style="">
@@ -354,6 +390,8 @@
                                                 <td>
                                                     <input style="text-align: center;" id="'.strtolower(trim($products)).'_api_level" name="api-price[]" type="number" value="'.$product_api_details["val_1"].'" placeholder="Percentage" step="0.1" min="0" max="100" class="product-price form-control mb-1" required/>
                                                 </td>
+                                                <td>'.$status_text.'</td>
+                                                <td style="min-width: 100px;">'.$actions.'</td>
                                             </tr>';	
                                             
                                             $csv_price_level_array[] = strtolower(trim($products)).",".$product_smart_details["val_1"].",".$product_agent_details["val_1"].",".$product_api_details["val_1"];
