@@ -321,11 +321,6 @@
               <i class="bi bi-credit-card-2-front"></i><span>Dollar Card</span>
             </a>
           </li>
-          <li>
-            <a href="<?php echo $web_http_host; ?>/bc-admin/Juicyway.php">
-              <i class="bi bi-gem"></i><span>Juicyway</span>
-            </a>
-          </li>
         </ul>
       </li>
 

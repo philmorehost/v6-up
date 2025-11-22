@@ -363,13 +363,6 @@ if (mysqli_num_rows($select_user_vendor_status_message) == 1) {
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="<?php echo $web_http_host; ?>/web/IntlMoneyTransfer.php">
-          <i class="bi bi-card-checklist"></i>
-          <span>Int'l Money Transfer</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
         <a class="nav-link collapsed" href="<?php echo $web_http_host; ?>/web/AccountSettings.php">
           <i class="bi bi-key-fill"></i>
           <span>Account Settings</span>
