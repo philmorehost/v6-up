@@ -10,7 +10,14 @@ if(!isset($_SESSION["user_session"])){
 
     // Fetch user's Juicyway transfers
     $user_id = $select_user_table['id'];
-    $transfers_query = mysqli_query($connection_server, "SELECT * FROM sas_juicyway_transfers WHERE vendor_id='".$select_vendor_table["id"]."' ORDER BY id DESC");
+
+    // Fetch initial NGN wallet balance
+    $ngn_balance_query = mysqli_query($connection_server, "SELECT balance FROM sas_user_wallets WHERE user_id = '$user_id' AND currency = 'NGN'");
+    $ngn_balance = 0.00;
+    if (mysqli_num_rows($ngn_balance_query) > 0) {
+        $ngn_wallet = mysqli_fetch_assoc($ngn_balance_query);
+        $ngn_balance = $ngn_wallet['balance'];
+    }
 
     if(isset($_POST["initiate-transfer"])){
         $account_name = mysqli_real_escape_string($connection_server, trim(strip_tags($_POST["account_name"])));
@@ -182,15 +189,17 @@ if(!isset($_SESSION["user_session"])){
     <link href="../assets-2/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
+    <link href="../assets-2/css/style.css" rel="stylesheet">
     <link href="../cssfile/intl-money-transfer.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <?php include("../func/bc-header.php"); ?>
 
+    <main id="main" class="main">
     <div class="main-content-container">
         <div class="main-content">
-            <div class="header">
+            <div class="intl-header">
                     <div class="greeting">
                         <h1>Hello, <?php echo $select_user_table['fullname']; ?></h1>
                     </div>
@@ -211,8 +220,8 @@ if(!isset($_SESSION["user_session"])){
                 <!-- Balance Card -->
                 <div class="balance-card">
                     <h2>Available balance</h2>
-                    <div class="amount">₦ ******</div>
-                    <div class="ledger-balance">Ledger balance: ₦ ******</div>
+                    <div class="amount">₦ <?php echo number_format($ngn_balance, 2); ?></div>
+                    <div class="ledger-balance">Ledger balance: ₦ <?php echo number_format($ngn_balance, 2); ?></div>
                     <a href="#" class="account-details-btn">Account Details</a>
                 </div>
 
@@ -287,7 +296,7 @@ if(!isset($_SESSION["user_session"])){
                                     <?php
                                     $user_id = $select_user_table['id'];
                                     // In a real application, you would also join with the users table to get the username
-                                    $transactions_query = mysqli_query($connection_server, "SELECT * FROM sas_juicyway_transfers WHERE vendor_id='".$select_vendor_table["id"]."' ORDER BY id DESC");
+                                     $transactions_query = mysqli_query($connection_server, "SELECT * FROM sas_juicyway_transfers WHERE user_id='$user_id' ORDER BY id DESC");
                                     if(mysqli_num_rows($transactions_query) > 0):
                                         while($transaction = mysqli_fetch_assoc($transactions_query)):
                                     ?>
@@ -539,7 +548,7 @@ if(!isset($_SESSION["user_session"])){
             </div>
         </div>
     </div>
-
+    </main>
     <?php include("../func/bc-footer.php"); ?>
 </body>
 </html>

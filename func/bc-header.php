@@ -137,6 +137,13 @@ if (mysqli_num_rows($select_user_vendor_status_message) == 1) {
       </li><!-- End Bank Transfer Page Nav -->
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="<?php echo $web_http_host; ?>/web/IntlMoneyTransfer.php">
+          <i class="bi bi-globe"></i>
+          <span>International Money Transfer</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#manage-fund-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Manage Funds</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
