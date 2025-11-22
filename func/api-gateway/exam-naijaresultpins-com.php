@@ -1,7 +1,12 @@
 <?php
-$exam_service_provider_alter_code = array("waec" => "1", "neco" => "2", "nabteb" => "3");
-if (array_key_exists($product_name, $exam_service_provider_alter_code)) {
-    $card_type_id = $exam_service_provider_alter_code[$product_name];
+$exam_service_provider_alter_code = array(
+    "waec" => array("result_checker" => "1"),
+    "neco" => array("result_checker" => "2"),
+    "nabteb" => array("result_checker" => "3")
+);
+
+if (array_key_exists($product_name, $exam_service_provider_alter_code) && isset($exam_service_provider_alter_code[$product_name][$card_type])) {
+    $card_type_id = $exam_service_provider_alter_code[$product_name][$card_type];
     $curl_url = "https://" . $api_detail["api_base_url"] . "/api/v1/exam-card/buy";
     $curl_request = curl_init($curl_url);
     curl_setopt($curl_request, CURLOPT_POST, true);

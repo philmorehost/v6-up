@@ -4,13 +4,15 @@ $purchase_method_array = array("API", "WEB", "APP");
 if (in_array($purchase_method, $purchase_method_array)) {
     if ($purchase_method === "WEB") {
         $epp = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($_POST["epp"]))));
-        $quantity = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($_POST["quantity"]))));
+        $card_type = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($_POST["quantity"]))));
+        $quantity = 1;
 
     }
 
     if (in_array($purchase_method, array("API", "APP"))) {
         $epp = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($get_api_post_info["type"]))));
-        $quantity = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($get_api_post_info["quantity"]))));
+        $card_type = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($get_api_post_info["quantity"]))));
+        $quantity = 1;
     }
     //$discounted_amount = $amount;
     $type_alternative = ucwords($epp . " exam");
@@ -40,7 +42,7 @@ if (in_array($purchase_method, $purchase_method_array)) {
                                         $product_name = strtolower($epp);
                                         $product_status_table = mysqli_fetch_array(mysqli_query($connection_server, "SELECT * FROM $exam_type_table_name WHERE vendor_id='" . $get_logged_user_details["vendor_id"] . "' && product_name='" . $product_name . "' LIMIT 1"));
                                         $product_table = mysqli_fetch_array(mysqli_query($connection_server, "SELECT * FROM sas_products WHERE vendor_id='" . $get_logged_user_details["vendor_id"] . "' && product_name='" . $product_name . "' LIMIT 1"));
-                                        $product_discount_table = mysqli_fetch_array(mysqli_query($connection_server, "SELECT * FROM $acc_level_table_name WHERE vendor_id='" . $get_logged_user_details["vendor_id"] . "' && api_id='" . $api_detail["id"] . "' && product_id='" . $product_table["id"] . "' && val_1='" . $quantity . "' LIMIT 1"));
+                                        $product_discount_table = mysqli_fetch_array(mysqli_query($connection_server, "SELECT * FROM $acc_level_table_name WHERE vendor_id='" . $get_logged_user_details["vendor_id"] . "' && api_id='" . $api_detail["id"] . "' && product_id='" . $product_table["id"] . "' && val_1='" . $card_type . "' LIMIT 1"));
                                         $amount = $product_discount_table["val_2"];
                                         $discounted_amount = $amount;
                                     }
