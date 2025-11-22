@@ -1,39 +1,21 @@
 <?php
-    // --- DATABASE CONNECTION & VENDOR DETAILS ---
-    function get_db_connection() {
-        include("func/bc-connect.php");
-        return $connection_server;
-    }
+// Initialize variables to be used in the template
+$whatsapp_number = '';
+$header_image_url = '';
 
-    $connection_server = get_db_connection();
-    $vendor_account_details = null;
-    $whatsapp_number = '';
-
-    // Securely fetch vendor details
-    if ($connection_server) {
-        $host = $_SERVER["HTTP_HOST"];
-        $stmt = mysqli_prepare($connection_server, "SELECT * FROM sas_vendors WHERE website_url = ? AND status = 1 LIMIT 1");
-        mysqli_stmt_bind_param($stmt, "s", $host);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        if ($row = mysqli_fetch_assoc($result)) {
-            $vendor_account_details = $row;
-
-            // --- Format Phone Number for WhatsApp ---
-            if (!empty($vendor_account_details['phone_number'])) {
-                $phone = preg_replace('/[^0-9]/', '', $vendor_account_details['phone_number']); // Remove non-numeric characters
-                if (substr($phone, 0, 1) === '0') {
-                    $whatsapp_number = '234' . substr($phone, 1);
-                } else if (substr($phone, 0, 3) === '234') {
-                    $whatsapp_number = $phone;
-                }
-                // Add more conditions if other formats are expected
-            }
+// Check if vendor details are available from index.php
+if (isset($vendor_account_details) && is_array($vendor_account_details)) {
+    // Format the phone number for WhatsApp
+    if (!empty($vendor_account_details['phone_number'])) {
+        $phone = preg_replace('/[^0-9]/', '', $vendor_account_details['phone_number']);
+        if (substr($phone, 0, 1) === '0') {
+            $whatsapp_number = '234' . substr($phone, 1);
+        } elseif (substr($phone, 0, 3) === '234') {
+            $whatsapp_number = $phone;
         }
-        mysqli_stmt_close($stmt);
     }
 
-    // Function to get header image
+    // Function to get the header image (can be kept here or moved to a central function file)
     function get_header_image($connection, $vendor_id) {
         if (!$connection || !$vendor_id) return '';
         $template_name = '%template-1%';
@@ -46,7 +28,11 @@
         return $image['header_image'] ?? '';
     }
 
-    $header_image_url = $vendor_account_details ? get_header_image($connection_server, $vendor_account_details["id"]) : '';
+    // Get the header image URL
+    if ($connection_server) { // Ensure connection is available
+        $header_image_url = get_header_image($connection_server, $vendor_account_details["id"]);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
