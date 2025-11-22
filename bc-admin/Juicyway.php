@@ -148,14 +148,7 @@
     <meta name="dc.creator" content="BeeCodes Titan">
 
                   <!-- Vendor CSS Files -->
-  <link href="../assets-2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets-2/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../assets-2/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../assets-2/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="../assets-2/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="../assets-2/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="../assets-2/vendor/simple-datatables/style.css" rel="stylesheet">
-  <link href="/cssfile/juicyway.css" rel="stylesheet">
+  <link href="<?php echo $web_http_host; ?>/cssfile/template/juicyway.css" rel="stylesheet">
 </head>
 <body>
     <?php include("../func/bc-admin-header.php"); ?>
