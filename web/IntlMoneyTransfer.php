@@ -196,7 +196,6 @@ if(!isset($_SESSION["user_session"])){
 <body>
     <?php include("../func/bc-header.php"); ?>
 
-    <main id="main" class="main">
     <div class="main-content-container">
         <div class="main-content">
             <div class="intl-header">
@@ -548,7 +547,6 @@ if(!isset($_SESSION["user_session"])){
             </div>
         </div>
     </div>
-    </main>
     <?php include("../func/bc-footer.php"); ?>
 </body>
 </html>
