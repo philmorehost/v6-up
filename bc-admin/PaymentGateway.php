@@ -2,8 +2,8 @@
     include("../func/bc-admin-config.php");
 	
 	$kyc_verification_array = array("bvn", "nin");
-    $payment_gateway_array = array("monnify", "flutterwave", "paystack", "payvessel", "beewave", "fincra", "vpay");
-	$payment_gateway_webhook_array = array("monnify" => $web_http_host . "/users-monnify.php", "flutterwave" => $web_http_host . "/users-flutterwave.php", "paystack" => $web_http_host . "/users-paystack.php", "payvessel" => $web_http_host . "/users-payvessel.php", "beewave" => $web_http_host . "/users-beewave.php", "fincra" => $web_http_host . "/users-fincra.php", "vpay" => $web_http_host . "/users-vpay.php");
+    $payment_gateway_array = array("monnify", "flutterwave", "paystack", "payvessel", "beewave", "fincra", "vpay", "juicyway");
+	$payment_gateway_webhook_array = array("monnify" => $web_http_host . "/users-monnify.php", "flutterwave" => $web_http_host . "/users-flutterwave.php", "paystack" => $web_http_host . "/users-paystack.php", "payvessel" => $web_http_host . "/users-payvessel.php", "beewave" => $web_http_host . "/users-beewave.php", "fincra" => $web_http_host . "/users-fincra.php", "vpay" => $web_http_host . "/users-vpay.php", "juicyway" => $web_http_host . "/users-juicyway.php");
 	
 	if(isset($_POST["update-kyc-details"])){
         $verification_name = $_POST["verification-name"];

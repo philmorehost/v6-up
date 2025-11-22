@@ -1,0 +1,23 @@
+/* Scoped styles for Juicyway Features page */
+
+.bank-transfer-card,
+.sales-card,
+.revenue-card,
+.customers-card {
+    border-radius: 15px;
+    margin-bottom: 30px;
+    border: none;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+
+.card-body {
+  padding: 0 20px 20px 20px;
+}
+
+.card-title {
+  padding: 20px 0 15px 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #012970;
+  font-family: "Poppins", sans-serif;
+}
