@@ -76,6 +76,9 @@ $create_user_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXIST
 //Create User Banks Table
 $create_user_banks_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXISTS sas_user_banks (vendor_id INT UNSIGNED NOT NULL, username VARCHAR(225) NOT NULL, reference VARCHAR(225) NOT NULL, bank_code VARCHAR(225) NOT NULL, bank_name VARCHAR(225) NOT NULL, account_name VARCHAR(225) NOT NULL, account_number VARCHAR(225) NOT NULL)");
 
+//Create User Wallets Table
+$create_user_wallets_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXISTS sas_user_wallets (id INT NOT NULL AUTO_INCREMENT, user_id INT UNSIGNED NOT NULL, currency VARCHAR(10) NOT NULL, balance DECIMAL(65,30) UNSIGNED NOT NULL DEFAULT 0.00, PRIMARY KEY (id), UNIQUE KEY (user_id, currency))");
+
 //Create User Minimum Funding Table
 $create_user_minimum_funding_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXISTS sas_user_minimum_funding (vendor_id INT UNSIGNED NOT NULL, min_amount VARCHAR(225) NOT NULL)");
 
@@ -285,8 +288,11 @@ $create_bank_transfer_gateway_table = mysqli_query($connection_server, "CREATE T
 //Create Bank Transfers Table
 $create_bank_transfer_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXISTS sas_bank_transfer_history (id INT NOT NULL AUTO_INCREMENT, vendor_id INT UNSIGNED NOT NULL, reference VARCHAR(225) NOT NULL, username VARCHAR(225) NOT NULL, amount DECIMAL(65,30) UNSIGNED NOT NULL, amount_charged DECIMAL(65,30) UNSIGNED NOT NULL, bank_code VARCHAR(225) NOT NULL, bank_name VARCHAR(225) NOT NULL, account_name VARCHAR(225) NOT NULL, account_number VARCHAR(225) NOT NULL, narration VARCHAR(225) NOT NULL, session_id VARCHAR(225) NOT NULL, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (id))");
 
+//Create Payment Links Table
+$create_payment_links_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXISTS sas_payment_links (id INT NOT NULL AUTO_INCREMENT, user_id INT UNSIGNED NOT NULL, vendor_id INT UNSIGNED NOT NULL, amount DECIMAL(65,30) UNSIGNED NOT NULL, currency VARCHAR(10) NOT NULL, description VARCHAR(225) NOT NULL, reference VARCHAR(225) NOT NULL, status VARCHAR(20) NOT NULL DEFAULT 'active', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (id))");
+
 //Create Juicyway Transfers Table
-$create_juicyway_transfer_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXISTS sas_juicyway_transfers (id INT NOT NULL AUTO_INCREMENT, vendor_id INT UNSIGNED NOT NULL, reference VARCHAR(225) NOT NULL, amount DECIMAL(65,30) UNSIGNED NOT NULL, description VARCHAR(225) NOT NULL, destination_currency VARCHAR(225), source_currency VARCHAR(225), wallet_address VARCHAR(225), chain VARCHAR(225), crypto_currency VARCHAR(225), status VARCHAR(225) NOT NULL, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (id))");
+$create_juicyway_transfer_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXISTS sas_juicyway_transfers (id INT NOT NULL AUTO_INCREMENT, user_id INT UNSIGNED NOT NULL, vendor_id INT UNSIGNED NOT NULL, reference VARCHAR(225) NOT NULL, amount DECIMAL(65,30) UNSIGNED NOT NULL, description VARCHAR(225) NOT NULL, destination_currency VARCHAR(225), source_currency VARCHAR(225), wallet_address VARCHAR(225), chain VARCHAR(225), crypto_currency VARCHAR(225), status VARCHAR(225) NOT NULL, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (id))");
 
 //Create KYC Verification Table
 $create_kyc_verification_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXISTS sas_kyc_verifications (vendor_id INT UNSIGNED NOT NULL, verification_name VARCHAR(225) NOT NULL, status INT UNSIGNED NOT NULL, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
