@@ -231,6 +231,12 @@
               <i class="bi bi-circle"></i><span>Bank Transfer</span>
             </a>
           </li>
+
+          <li>
+            <a href="<?php echo $web_http_host; ?>/bc-admin/NumberFilter.php">
+              <i class="bi bi-circle"></i><span>Number Filter</span>
+            </a>
+          </li>
           
         </ul>
       </li>
