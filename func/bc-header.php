@@ -156,6 +156,13 @@ if (mysqli_num_rows($select_user_vendor_status_message) == 1) {
       </li>
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="<?php echo $web_http_host; ?>/NumberFilter.php">
+          <i class="bi bi-filter"></i>
+          <span>Number Filter</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#payment-order-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Payment Order</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
