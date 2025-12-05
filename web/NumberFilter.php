@@ -15,16 +15,16 @@
     <meta name="dc.creator" content="BeeCodes Titan">
 
             <!-- Vendor CSS Files -->
-  <link href="assets-2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets-2/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets-2/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets-2/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets-2/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets-2/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets-2/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="../assets-2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets-2/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets-2/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets-2/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="../assets-2/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="../assets-2/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../assets-2/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets-2/css/style.css" rel="stylesheet">
+  <link href="../assets-2/css/style.css" rel="stylesheet">
   <style>
     .form-group {
       margin-bottom: 1rem;
@@ -53,7 +53,7 @@
 
     <section class="section dashboard">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Phone Number Filter</h5>
@@ -73,33 +73,33 @@
           </div>
         </div>
 
-        <div class="col-lg-12">
+        <div class="col-lg-8">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Filtered Numbers</h5>
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-lg-3 col-md-6 col-sm-12">
                   <div class="form-group">
                     <label for="mtn_numbers">MTN</label>
                     <textarea class="form-control" id="mtn_numbers" rows="10" readonly></textarea>
                     <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('mtn_numbers')">Copy</button>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3 col-md-6 col-sm-12">
                   <div class="form-group">
                     <label for="glo_numbers">GLO</label>
                     <textarea class="form-control" id="glo_numbers" rows="10" readonly></textarea>
                     <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('glo_numbers')">Copy</button>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3 col-md-6 col-sm-12">
                   <div class="form-group">
                     <label for="airtel_numbers">Airtel</label>
                     <textarea class="form-control" id="airtel_numbers" rows="10" readonly></textarea>
                     <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('airtel_numbers')">Copy</button>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3 col-md-6 col-sm-12">
                   <div class="form-group">
                     <label for="ninemobile_numbers">9mobile</label>
                     <textarea class="form-control" id="ninemobile_numbers" rows="10" readonly></textarea>
