@@ -128,9 +128,18 @@
 function tickProduct(element, networkName, productID, buttonID, fileExt) {
     const productNameInput = document.getElementById(productID);
     const installButton = document.getElementById(buttonID);
-    const container = element.closest('.container');
-    const selectAllCheckbox = container.querySelector("#select-all-checkbox");
-    const allProductImages = container.querySelectorAll("img[product-name-array]");
+    const selectAllCheckbox = document.getElementById('select-all-checkbox');
+
+    // Find the container of the product images. This is more robust.
+    const imageContainer = document.querySelector('img[product-name-array]') ? document.querySelector('img[product-name-array]').closest('.container') : null;
+    if (!imageContainer) {
+        // If there are no images, do nothing.
+        installButton.style.pointerEvents = "none";
+        if(selectAllCheckbox) selectAllCheckbox.checked = false;
+        return;
+    }
+
+    const allProductImages = imageContainer.querySelectorAll("img[product-name-array]");
     const allProductNames = Array.from(allProductImages).map(img => img.alt);
 
     fileExt = fileExt || 'png';
@@ -138,14 +147,14 @@ function tickProduct(element, networkName, productID, buttonID, fileExt) {
     let selectedProducts = productNameInput.value ? productNameInput.value.split(',').filter(p => p) : [];
 
     if (networkName === 'all') {
-        // 'Select All' checkbox was changed
-        if (selectAllCheckbox.checked) {
+        // This logic is triggered by the 'Select All' checkbox
+        if (selectAllCheckbox && selectAllCheckbox.checked) {
             selectedProducts = [...allProductNames];
         } else {
             selectedProducts = [];
         }
     } else {
-        // A single product image was clicked
+        // This logic is triggered by clicking a single product image
         const productIndex = selectedProducts.indexOf(networkName);
         if (productIndex > -1) {
             selectedProducts.splice(productIndex, 1);
@@ -154,33 +163,29 @@ function tickProduct(element, networkName, productID, buttonID, fileExt) {
         }
     }
 
-    // Update UI for all images
+    // Update UI for all images based on the selectedProducts array
     allProductNames.forEach(name => {
         const imageElement = document.getElementById(name + "-lg");
         if (imageElement) {
             if (selectedProducts.includes(name)) {
                 imageElement.src = `/asset/${name}-marked.${fileExt}`;
                 imageElement.style.filter = "grayscale(0%)";
-                imageElement.classList.remove("br-radius-100px");
-                imageElement.classList.add("br-radius-5px");
             } else {
                 imageElement.src = `/asset/${name}.${fileExt}`;
                 imageElement.style.filter = "grayscale(100%)";
-                imageElement.classList.remove("br-radius-5px");
-                imageElement.classList.add("br-radius-100px");
             }
         }
     });
 
-    // Update 'Select All' checkbox state
+    // Synchronize the 'Select All' checkbox state
     if (selectAllCheckbox) {
-        selectAllCheckbox.checked = selectedProducts.length === allProductNames.length;
+        selectAllCheckbox.checked = selectedProducts.length === allProductNames.length && allProductNames.length > 0;
     }
 
-    // Update hidden input
+    // Update the hidden input field with the list of selected products
     productNameInput.value = selectedProducts.join(',');
 
-    // Update install button
+    // Enable or disable the install button based on whether any products are selected
     installButton.style.pointerEvents = selectedProducts.length > 0 ? "auto" : "none";
 }
     
