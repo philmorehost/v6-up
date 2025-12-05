@@ -129,30 +129,27 @@ function tickProduct(element, networkName, productID, buttonID, fileExt) {
     const productNameInput = document.getElementById(productID);
     const installButton = document.getElementById(buttonID);
     const container = element.closest('.container');
-    const selectAllButton = container.querySelector("button[onclick*=\"'all'\"]");
-    const allProductNames = selectAllButton.getAttribute("product-name-array").replaceAll(" ", "").split(",");
+    const selectAllCheckbox = container.querySelector("#select-all-checkbox");
+    const allProductImages = container.querySelectorAll("img[product-name-array]");
+    const allProductNames = Array.from(allProductImages).map(img => img.alt);
 
     fileExt = fileExt || 'png';
 
     let selectedProducts = productNameInput.value ? productNameInput.value.split(',').filter(p => p) : [];
 
     if (networkName === 'all') {
-        // 'Select All' button was clicked
-        if (selectedProducts.length === allProductNames.length) {
-            // Deselect all
-            selectedProducts = [];
-        } else {
-            // Select all
+        // 'Select All' checkbox was changed
+        if (selectAllCheckbox.checked) {
             selectedProducts = [...allProductNames];
+        } else {
+            selectedProducts = [];
         }
     } else {
         // A single product image was clicked
         const productIndex = selectedProducts.indexOf(networkName);
         if (productIndex > -1) {
-            // Deselect it
             selectedProducts.splice(productIndex, 1);
         } else {
-            // Select it
             selectedProducts.push(networkName);
         }
     }
@@ -175,13 +172,9 @@ function tickProduct(element, networkName, productID, buttonID, fileExt) {
         }
     });
 
-    // Update 'Select All' button text
-    if (selectAllButton) {
-        if (selectedProducts.length === allProductNames.length) {
-            selectAllButton.innerText = 'DESELECT ALL';
-        } else {
-            selectAllButton.innerText = 'SELECT ALL';
-        }
+    // Update 'Select All' checkbox state
+    if (selectAllCheckbox) {
+        selectAllCheckbox.checked = selectedProducts.length === allProductNames.length;
     }
 
     // Update hidden input

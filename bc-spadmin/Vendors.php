@@ -314,7 +314,7 @@
                 </table>
             </div><br/>
 
-      <span style="user-select: auto;" class="fw-bold h4 mb-1">BLOCKED ACCOUNT (<?php echo mysqli_num_rows($get_inactive_user_details); ?>)</span><br>
+      <span style="user-select: auto;" class="fw-bold h4 mb-1">SUSPENDED/BLOCKED ACCOUNT (<?php echo mysqli_num_rows($get_inactive_user_details); ?>)</span><br>
       <div style="user-select: auto; cursor: grab;" class="overflow-auto">
         <table style="" class="table table-responsive table-striped table-bordered" title="Horizontal Scroll: Shift + Mouse Scroll Button">
             <thead class="thead-dark">
@@ -328,8 +328,9 @@
                         while($user_details = mysqli_fetch_assoc($get_inactive_user_details)){
                             $transaction_type = ucwords($user_details["type_alternative"]);
                             $countTransaction += 1;
-                            $activate_user_account = '<span onclick="updateVendorAccountStatus(`1`,`'.$user_details["id"].'`,`'.$user_details["email"].'`);" style="text-decoration: underline; color: red;" class=""><i title="Re-activate Account" style="" class="bi bi-check-circle" ></i></span>';
-                            $delete_user_account = '<span onclick="updateVendorAccountStatus(`3`,`'.$user_details["id"].'`,`'.$user_details["email"].'`);" style="text-decoration: underline; color: green;" class=""><i title="Re-activate Account" style="" class="bi bi-trash-fill" ></i></span>';
+                            // A "suspended" account is a "blocked" account with status = 2. Activating it sets the status to 1.
+                            $activate_user_account = '<span onclick="updateVendorAccountStatus(`1`,`'.$user_details["id"].'`,`'.$user_details["email"].'`);" style="text-decoration: underline; color: red;" class=""><i title="Unsuspend/Re-activate Account" style="" class="bi bi-check-circle" ></i></span>';
+                            $delete_user_account = '<span onclick="updateVendorAccountStatus(`3`,`'.$user_details["id"].'`,`'.$user_details["email"].'`);" style="text-decoration: underline; color: green;" class=""><i title="Delete Account" style="" class="bi bi-trash-fill" ></i></span>';
                             $login_user_account = '<span onclick="loginVendorAccount(`'.$user_details["id"].'`, `'.$user_details["email"].'`);" style="text-decoration: underline; color: orange;" class=""><i title="Login Account" style="" class="bi bi-box-arrow-in-right" ></i></span>';
                             $all_user_account_action = $activate_user_account." ".$delete_user_account." ".$login_user_account;
 

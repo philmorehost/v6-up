@@ -318,6 +318,9 @@ $create_vendor_style_templates_table = mysqli_query($connection_server, "CREATE 
 //Create Super Admin Style Template Table
 $create_spadmin_style_templates_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXISTS sas_spadmin_style_templates (template_name VARCHAR(225) NOT NULL, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
+//Create Super Admin Options Table
+$create_super_admin_options_table = mysqli_query($connection_server, "CREATE TABLE IF NOT EXISTS sas_super_admin_options (option_name VARCHAR(255) PRIMARY KEY, option_value TEXT)");
+
 $test_check_admin_table_exists = mysqli_query($connection_server, "SELECT * FROM sas_super_admin");
 // Test Infos
 if (mysqli_num_rows($test_check_admin_table_exists) == 0) {

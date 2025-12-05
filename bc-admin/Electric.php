@@ -192,7 +192,11 @@
           <div class="row mb-3">
             <span style="user-select: auto;" class="h4 fw-bold">PRODUCT INSTALLATION</span><br>
             <div style="text-align: center; user-select: auto;" class="container">
-                <button type="button" class="btn btn-info col-12 mb-2" product-name-array="ekedc,eedc,ikedc,jedc,kedco,ibedc,phed,aedc,yedc" onclick="tickProduct(this, 'all', 'api-product-name', 'install-product', 'jpg');">SELECT ALL</button><br/>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="select-all-checkbox" onchange="tickProduct(this, 'all', 'api-product-name', 'install-product', 'jpg');">
+                    <label class="form-check-label" for="select-all-checkbox">Select All</label>
+                </div>
+                <hr>
                 <img alt="ekedc" id="ekedc-lg" product-name-array="ekedc,eedc,ikedc,jedc,kedco,ibedc,phed,aedc,yedc" src="/asset/ekedc.jpg" onclick="tickProduct(this, 'ekedc', 'api-product-name', 'install-product', 'jpg');" class="col-2 rounded-5 border m-1  "/>
                 <img alt="eedc" id="eedc-lg" product-name-array="ekedc,eedc,ikedc,jedc,kedco,ibedc,phed,aedc,yedc" src="/asset/eedc.jpg" onclick="tickProduct(this, 'eedc', 'api-product-name', 'install-product', 'jpg');" class="col-2 rounded-5 border m-1 "/>
                 <img alt="ikedc" id="ikedc-lg" product-name-array="ekedc,eedc,ikedc,jedc,kedco,ibedc,phed,aedc,yedc" src="/asset/ikedc.jpg" onclick="tickProduct(this, 'ikedc', 'api-product-name', 'install-product', 'jpg');" class="col-2 rounded-5 border m-1 "/>

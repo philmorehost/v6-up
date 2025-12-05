@@ -264,6 +264,43 @@
 				</button><br>
 			</form>	
 		</div>
+
+        <div style="text-align: center;" class="card info-card px-5 py-5">
+		<span style="user-select: auto;" class="text-dark h5">VENDOR WELCOME/ACTIVATED TEMPLATE</span><br>
+            <form method="post" enctype="multipart/form-data" action="">
+			<div style="text-align: center;" class="container">
+                    <span id="" class="h5"><span style="user-select: auto;">Firstname:</span> <span id="" class="fw-bold" style="user-select: auto;">{firstname}</span></span>,
+		        <span id="" class="h5"><span style="user-select: auto;">Lastname:</span> <span id="" class="fw-bold" style="user-select: auto;">{lastname}</span></span><br/>
+                    <span id="" class="h5"><span style="user-select: auto;">Expiry Date:</span> <span id="" class="fw-bold" style="user-select: auto;">{expiry_date}</span></span><br/>
+                    <span id="" class="h5"><span style="user-select: auto;">Domain Nameservers:</span> <span id="" class="fw-bold" style="user-select: auto;">{domain_nameservers}</span></span><br/>
+                    <span id="" class="h5"><span style="user-select: auto;">Domain IP Address:</span> <span id="" class="fw-bold" style="user-select: auto;">{domain_ip_address}</span></span><br/>
+                    <span id="" class="h5"><span style="user-select: auto;">Domain Registrar URL:</span> <span id="" class="fw-bold" style="user-select: auto;">{domain_registrar_url}</span></span><br/>
+                </div><br/>
+                <input style="text-align: left;" id="" name="type" onkeyup="" type="text" value="vendor-welcome-activated" placeholder="Email Type" hidden readonly required/>
+                <input style="text-align: left;" id="" name="subject" onkeyup="" type="text" value="<?php echo getSuperAdminEmailTemplate('vendor-welcome-activated','subject'); ?>" placeholder="Email Subject" class="form-control mb-1" required/><br/>
+                <textarea style="text-align: left; resize: none;" id="" name="body" onkeyup="" placeholder="Email Body" class="form-control mb-1" rows="10" required><?php echo getSuperAdminEmailTemplate('vendor-welcome-activated','body'); ?>
+Welcome aboard, {firstname}!
+
+Your vendor account is now active. Please note that to use your VTU website, you must register a domain name and point it to our servers.
+
+You can register a domain name at: {domain_registrar_url}
+
+Use the following details to configure your domain:
+Nameservers:
+{domain_nameservers}
+
+For subdomains, please use the following IP Address for the A record:
+{domain_ip_address}
+
+Your subscription will expire on: {expiry_date}.
+
+Thank you for joining us!
+                </textarea><br>
+			<button name="update-template" type="submit" style="user-select: auto;" class="btn btn-success col-12 mb-1" >
+				UPDATE TEMPLATE
+			</button><br>
+		</form>
+	</div><br/>
       </div>
     </section>
         

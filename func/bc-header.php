@@ -156,7 +156,7 @@ if (mysqli_num_rows($select_user_vendor_status_message) == 1) {
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="<?php echo $web_http_host; ?>/NumberFilter.php">
+        <a class="nav-link collapsed" href="<?php echo $web_http_host; ?>/web/NumberFilter.php">
           <i class="bi bi-filter"></i>
           <span>Number Filter</span>
         </a>
