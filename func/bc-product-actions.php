@@ -110,14 +110,21 @@ function install_product($connection_server, $get_logged_admin_details, $product
                     mysqli_query($connection_server, "UPDATE $status_table_name SET api_id='$api_id', status='$item_status' WHERE vendor_id='" . $get_logged_admin_details["id"] . "' && product_name='$product_name'");
                 }
 
+                // Check if the product exists in sas_products, if not, create it.
+                $select_product_details = mysqli_query($connection_server, "SELECT * FROM sas_products WHERE vendor_id='" . $get_logged_admin_details["id"] . "' && product_name='$product_name'");
+                if (mysqli_num_rows($select_product_details) == 0) {
+                    mysqli_query($connection_server, "INSERT INTO sas_products (vendor_id, product_name, product_type) VALUES ('" . $get_logged_admin_details["id"] . "', '$product_name', '$product_type')");
+                }
+
                 if (!empty($extra_tables)) {
                     foreach ($extra_tables as $tables) {
                         if (is_array($tables)) {
-                            foreach ($tables as $account_level_table_name) {
-                                $select_product_details = mysqli_query($connection_server, "SELECT * FROM sas_products WHERE vendor_id='" . $get_logged_admin_details["id"] . "' && product_name='$product_name'");
-                                if (mysqli_num_rows($select_product_details) == 1) {
-                                    $get_product_details = mysqli_fetch_array($select_product_details);
-                                    $product_id = $get_product_details["id"];
+                            $select_product_details = mysqli_query($connection_server, "SELECT * FROM sas_products WHERE vendor_id='" . $get_logged_admin_details["id"] . "' && product_name='$product_name'");
+                            if (mysqli_num_rows($select_product_details) == 1) {
+                                $get_product_details = mysqli_fetch_array($select_product_details);
+                                $product_id = $get_product_details["id"];
+
+                                foreach ($tables as $account_level_table_name) {
                                     $product_variety_list = isset($product_varieties[$product_name]) ? $product_varieties[$product_name] : array("1");
                                     foreach ($product_variety_list as $product_val_1) {
                                         $product_val_1 = trim($product_val_1);
