@@ -124,14 +124,17 @@ function install_product($connection_server, $get_logged_admin_details, $product
                                 $get_product_details = mysqli_fetch_array($select_product_details);
                                 $product_id = $get_product_details["id"];
 
+                                // Before inserting new discount records, delete all existing ones for this product and vendor.
+                                foreach ($tables as $account_level_table_name) {
+                                    mysqli_query($connection_server, "DELETE FROM $account_level_table_name WHERE vendor_id='" . $get_logged_admin_details["id"] . "' && product_id='$product_id'");
+                                }
+
+                                // Now, insert the new discount records.
                                 foreach ($tables as $account_level_table_name) {
                                     $product_variety_list = isset($product_varieties[$product_name]) ? $product_varieties[$product_name] : array("1");
                                     foreach ($product_variety_list as $product_val_1) {
                                         $product_val_1 = trim($product_val_1);
-                                        $product_pricing_table = mysqli_query($connection_server, "SELECT * FROM $account_level_table_name WHERE vendor_id='" . $get_logged_admin_details["id"] . "' && api_id='$api_id' && product_id='$product_id' && val_1='$product_val_1'");
-                                        if (mysqli_num_rows($product_pricing_table) == 0) {
-                                            mysqli_query($connection_server, "INSERT INTO $account_level_table_name (vendor_id, api_id, product_id, val_1, val_2, val_3) VALUES ('" . $get_logged_admin_details["id"] . "', '$api_id', '$product_id', '$product_val_1', '0', '0')");
-                                        }
+                                        mysqli_query($connection_server, "INSERT INTO $account_level_table_name (vendor_id, api_id, product_id, val_1, val_2, val_3) VALUES ('" . $get_logged_admin_details["id"] . "', '$api_id', '$product_id', '$product_val_1', '0', '0')");
                                     }
                                 }
                             }
