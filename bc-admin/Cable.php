@@ -44,7 +44,8 @@
     handle_product_actions($connection_server, $get_logged_admin_details);
 
     if(isset($_POST["install-product"])){
-        $products_array = array("startimes", "dstv", "gotv");
+        $product_names_str = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($_POST["product-name"]))));
+        $products_array = array_filter(explode(',', $product_names_str));
         $product_varieties = array(
             "startimes" => array("nova_weekly", "basic_weekly", "smart_weekly", "classic_weekly", "super_weekly", "nova", "basic", "smart", "classic", "super", "chinese_dish", "nova_antenna"),
             "dstv" => array("padi","yanga","confam","compact","premium","padi_extraview","yanga_extraview","confam_extraview","compact_extra_view","compact_plus","compact_plus_extra_view","compact_plus_frenchplus_extra_view","premium_extra_view","premium_french_extra_view"),

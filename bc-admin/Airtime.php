@@ -44,7 +44,8 @@
     handle_product_actions($connection_server, $get_logged_admin_details);
 
     if(isset($_POST["install-product"])){
-        $products_array = array("mtn", "airtel", "glo", "9mobile");
+        $product_names_str = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($_POST["product-name"]))));
+        $products_array = array_filter(explode(',', $product_names_str));
         $account_level_table_name_arrays = array("sas_smart_parameter_values", "sas_agent_parameter_values", "sas_api_parameter_values");
         install_product($connection_server, $get_logged_admin_details, "airtime", "sas_airtime_status", $products_array, array(), $account_level_table_name_arrays);
     }

@@ -44,7 +44,8 @@
     handle_product_actions($connection_server, $get_logged_admin_details);
 
     if (isset($_POST["install-product"])) {
-        $products_array = array("mtn", "airtel", "glo", "9mobile");
+        $product_names_str = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($_POST["product-name"]))));
+        $products_array = array_filter(explode(',', $product_names_str));
         $product_varieties = array(
             "mtn" => array("100", "200", "500"),
             "airtel" => array("100", "200", "500"),

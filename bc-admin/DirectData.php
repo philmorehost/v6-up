@@ -44,7 +44,8 @@
     handle_product_actions($connection_server, $get_logged_admin_details);
 
     if(isset($_POST["install-product"])){
-        $products_array = array("mtn", "airtel", "glo", "9mobile");
+        $product_names_str = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($_POST["product-name"]))));
+        $products_array = array_filter(explode(',', $product_names_str));
         $product_varieties = array(
             "mtn" => array("110mb_awoof_1day","230mb_awoof_1day","500mb_awoof_1day","1gb_1.5mins_awoof_1day","2.5gb_awoof_2days","3.2gb_awoof_2days","1gb_weekly","11gb_weekly","2gb_monthly","2.7gb_10mins_monthly","3.5gb_monthly","7gb_monthly","10gb_10mins_monthly","12.5gb_monthly","16.5gb_plus_10mins_monthly","20gb_monthly","25gb_monthly","36gb_30days","75gb_30days","165gb_30days","150gb_60days","480gb_90days"),
             "airtel" => array("1gb_awoof_2days","1.5gb_awoof_2days","2gb_awoof_2days","3gb_awoof_2days","5gb_awoof_2days","500mb_7days","1gb_7days","1.5gb_7days","3.5gb_7days","6gb_7days","10gb_7days","18gb_7days","2gb_30days","3gb_30days","4gb_30days","8gb_30days","10gb_30days","13gb_30days","18gb_30days","25gb_30days","35gb_30days","60gb_30days","100gb_30days","160gb_30days","210gb_30days","300gb_30days","350gb_30days"),

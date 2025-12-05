@@ -44,7 +44,8 @@
     handle_product_actions($connection_server, $get_logged_admin_details);
 
     if(isset($_POST["install-product"])){
-        $products_array = array("mtn", "airtel", "glo", "9mobile");
+        $product_names_str = mysqli_real_escape_string($connection_server, trim(strip_tags(strtolower($_POST["product-name"]))));
+        $products_array = array_filter(explode(',', $product_names_str));
         $product_varieties = array(
             "mtn" => array("75mb_1day","110mb_1day","230mb_1day" ,"500mb","750mb_Free_1hour_TT/YT/IG_3days","1gb_1.5mins_1day","1.5gb","2.5gb_1day","2.5gb_2days","1gb_7days","2gb_2days","1.5gb_7days","3.2gb_2days","6gb_7days","11gb_7days","7gb_30days","10gb_10mins+2gb_YouTube_30days","12.5gb_30days","16.5gb_10Minutes_30days","40gb_60days","36gb_30days","75gb_30days","90gb_60days","165gb_30days","150gb_60days","200gb_30days","200gb_60days","250gb_30days","200gb_30days","480gb_90days"),
             "airtel" => array("150mb_1day","300mb_2days","600mb_2days","1gb_(Social)3days","1.5gb_2days","2gb_2days","3gb_7days","5gb_2days","7gb_7days","10gb_30days"),
