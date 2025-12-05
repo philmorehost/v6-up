@@ -1,5 +1,5 @@
 <?php session_start();
-    include("func/bc-config.php");
+    include("../func/bc-config.php");
 ?>
 <!DOCTYPE html>
 <head>
@@ -25,12 +25,22 @@
 
   <!-- Template Main CSS File -->
   <link href="assets-2/css/style.css" rel="stylesheet">
+  <style>
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .btn-secondary {
+      width: 100%;
+    }
+  </style>
 
 </head>
 <body>
-    <?php include("func/bc-header.php"); ?>
+    <?php include("../func/bc-header.php"); ?>
 
 
+	<main id="main" class="main">
 	<div class="pagetitle">
       <h1>Number Filter</h1>
       <nav>
@@ -42,57 +52,68 @@
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
-      <div class="col-12">
-        <div class="card info-card px-5 py-5">
-            <h5 class="card-title">Phone Number Filter</h5>
-            <p>Paste phone numbers in the box below and click the filter button to sort them by network.</p>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Phone Number Filter</h5>
+              <p>Paste phone numbers in the box below and click the filter button to sort them by network.</p>
 
-            <div class="row">
+              <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="phone_numbers">Paste Phone Numbers Here</label>
-                        <textarea class="form-control" id="phone_numbers" rows="10"></textarea>
-                    </div>
-                    <button type="button" class="btn btn-primary mt-3" id="filter_button">Filter Numbers</button>
+                  <div class="form-group">
+                    <label for="phone_numbers">Paste Phone Numbers Here</label>
+                    <textarea class="form-control" id="phone_numbers" rows="10"></textarea>
+                  </div>
+                  <button type="button" class="btn btn-primary mt-3" id="filter_button">Filter Numbers</button>
                 </div>
-            </div>
+              </div>
 
-            <div class="row mt-5">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="mtn_numbers">MTN</label>
-                        <textarea class="form-control" id="mtn_numbers" rows="10" readonly></textarea>
-                        <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('mtn_numbers')">Copy</button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="glo_numbers">GLO</label>
-                        <textarea class="form-control" id="glo_numbers" rows="10" readonly></textarea>
-                        <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('glo_numbers')">Copy</button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="airtel_numbers">Airtel</label>
-                        <textarea class="form-control" id="airtel_numbers" rows="10" readonly></textarea>
-                        <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('airtel_numbers')">Copy</button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="ninemobile_numbers">9mobile</label>
-                        <textarea class="form-control" id="ninemobile_numbers" rows="10" readonly></textarea>
-                        <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('ninemobile_numbers')">Copy</button>
-                    </div>
-                </div>
             </div>
+          </div>
+        </div>
 
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Filtered Numbers</h5>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="mtn_numbers">MTN</label>
+                    <textarea class="form-control" id="mtn_numbers" rows="10" readonly></textarea>
+                    <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('mtn_numbers')">Copy</button>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="glo_numbers">GLO</label>
+                    <textarea class="form-control" id="glo_numbers" rows="10" readonly></textarea>
+                    <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('glo_numbers')">Copy</button>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="airtel_numbers">Airtel</label>
+                    <textarea class="form-control" id="airtel_numbers" rows="10" readonly></textarea>
+                    <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('airtel_numbers')">Copy</button>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="ninemobile_numbers">9mobile</label>
+                    <textarea class="form-control" id="ninemobile_numbers" rows="10" readonly></textarea>
+                    <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard('ninemobile_numbers')">Copy</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-
-    <?php include("func/bc-footer.php"); ?>
+    </main>
+    <?php include("../func/bc-footer.php"); ?>
 
     <script>
         document.getElementById('filter_button').addEventListener('click', function() {
