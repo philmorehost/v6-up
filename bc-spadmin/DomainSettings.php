@@ -5,6 +5,7 @@
     if(isset($_POST['save_settings'])) {
         $nameservers = mysqli_real_escape_string($connection_server, $_POST['nameservers']);
         $ip_address = mysqli_real_escape_string($connection_server, $_POST['ip_address']);
+        $registrar_url = mysqli_real_escape_string($connection_server, $_POST['registrar_url']);
 
         // For simplicity, we'll store these in the sas_super_admin_options table
         // This requires having a table like this:
@@ -15,8 +16,9 @@
 
         $sql_nameservers = "INSERT INTO sas_super_admin_options (option_name, option_value) VALUES ('domain_nameservers', '$nameservers') ON DUPLICATE KEY UPDATE option_value = '$nameservers'";
         $sql_ip = "INSERT INTO sas_super_admin_options (option_name, option_value) VALUES ('domain_ip_address', '$ip_address') ON DUPLICATE KEY UPDATE option_value = '$ip_address'";
+        $sql_registrar = "INSERT INTO sas_super_admin_options (option_name, option_value) VALUES ('domain_registrar_url', '$registrar_url') ON DUPLICATE KEY UPDATE option_value = '$registrar_url'";
 
-        if(mysqli_query($connection_server, $sql_nameservers) && mysqli_query($connection_server, $sql_ip)) {
+        if(mysqli_query($connection_server, $sql_nameservers) && mysqli_query($connection_server, $sql_ip) && mysqli_query($connection_server, $sql_registrar)) {
             $_SESSION['page_alert'] = "Settings saved successfully!";
         } else {
             $_SESSION['page_alert'] = "Error saving settings: " . mysqli_error($connection_server);
@@ -28,7 +30,8 @@
     // Fetch current settings
     $nameservers = '';
     $ip_address = '';
-    $sql_fetch = "SELECT * FROM sas_super_admin_options WHERE option_name IN ('domain_nameservers', 'domain_ip_address')";
+    $registrar_url = '';
+    $sql_fetch = "SELECT * FROM sas_super_admin_options WHERE option_name IN ('domain_nameservers', 'domain_ip_address', 'domain_registrar_url')";
     $result = mysqli_query($connection_server, $sql_fetch);
     while($row = mysqli_fetch_assoc($result)) {
         if($row['option_name'] == 'domain_nameservers') {
@@ -36,6 +39,9 @@
         }
         if($row['option_name'] == 'domain_ip_address') {
             $ip_address = $row['option_value'];
+        }
+        if($row['option_name'] == 'domain_registrar_url') {
+            $registrar_url = $row['option_value'];
         }
     }
 ?>
@@ -85,6 +91,11 @@
                                 <label for="ip_address" class="form-label">A Record IP Address</label>
                                 <input type="text" class="form-control" id="ip_address" name="ip_address" value="<?php echo htmlspecialchars($ip_address); ?>" placeholder="e.g., 192.168.1.1">
                                 <div class="form-text">The IP address for vendors to use for A records (for subdomains).</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="registrar_url" class="form-label">Recommended Domain Registrar</label>
+                                <input type="url" class="form-control" id="registrar_url" name="registrar_url" value="<?php echo htmlspecialchars($registrar_url); ?>" placeholder="e.g., https://www.namecheap.com">
+                                <div class="form-text">The URL of the recommended domain registrar for new vendors.</div>
                             </div>
                             <button type="submit" name="save_settings" class="btn btn-primary">Save Settings</button>
                         </form>

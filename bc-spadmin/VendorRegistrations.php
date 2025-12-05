@@ -62,7 +62,8 @@
                         // Fetch domain settings to include in the welcome email
                         $nameservers = '';
                         $ip_address = '';
-                        $sql_fetch_settings = "SELECT * FROM sas_super_admin_options WHERE option_name IN ('domain_nameservers', 'domain_ip_address')";
+                        $registrar_url = '';
+                        $sql_fetch_settings = "SELECT * FROM sas_super_admin_options WHERE option_name IN ('domain_nameservers', 'domain_ip_address', 'domain_registrar_url')";
                         $settings_result = mysqli_query($connection_server, $sql_fetch_settings);
                         while($row = mysqli_fetch_assoc($settings_result)) {
                             if($row['option_name'] == 'domain_nameservers') {
@@ -70,6 +71,9 @@
                             }
                             if($row['option_name'] == 'domain_ip_address') {
                                 $ip_address = htmlspecialchars($row['option_value']);
+                            }
+                            if($row['option_name'] == 'domain_registrar_url') {
+                                $registrar_url = htmlspecialchars($row['option_value']);
                             }
                         }
 
@@ -79,7 +83,8 @@
                             "{lastname}" => $lastname,
                             "{expiry_date}" => date('F j, Y', strtotime($expiry_date)),
                             "{domain_nameservers}" => $nameservers,
-                            "{domain_ip_address}" => $ip_address
+                            "{domain_ip_address}" => $ip_address,
+                            "{domain_registrar_url}" => $registrar_url
                         );
                         $email_subject = getSuperAdminEmailTemplate('vendor-welcome-activated', 'subject');
                         $email_body = getSuperAdminEmailTemplate('vendor-welcome-activated', 'body');
