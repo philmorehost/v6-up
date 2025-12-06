@@ -1,5 +1,6 @@
 <?php session_start();
     include("../func/bc-spadmin-config.php");
+    include("../func/bc-tables.php");
 
     // Handle form submission
     if(isset($_POST['save_settings'])) {

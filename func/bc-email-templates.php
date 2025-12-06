@@ -164,7 +164,7 @@
 	createSuperAdminEmailTemplateIfNotExists(
 		"vendor-welcome-activated",
 		"Welcome! Your Vendor Account is Now Active",
-		"Dear {firstname} {lastname},\n\nCongratulations! Your vendor account has been approved and is now active.\n\nYou can now log in to your dashboard and start using our services.\n\nYour subscription is active until {expiry_date}.\n\nBest regards,\nThe Team"
+		"Dear {firstname} {lastname},\n\nCongratulations! Your vendor account has been approved and is now active.\n\nYou can now log in to your dashboard and start using our services.\n\nYour subscription is active until {expiry_date}.\n\nTo set up your domain, please use the following details:\n\nNameservers:\n{domain_nameservers}\n\nIf you intend to use a subdomain, please use the following IP for A records:\n{domain_ip_address}\n\nDomain name registration is not free. You can register your domain through our suggested registrar: {domain_registrar_url}\n\nBest regards,\nThe Team"
 	);
 
 	// Vendor Rejection

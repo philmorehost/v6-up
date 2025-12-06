@@ -132,11 +132,6 @@
               <i class="bi bi-circle"></i><span>Pending Registrations</span>
             </a>
           </li>
-          <li>
-            <a href="<?php echo $web_http_host; ?>/bc-spadmin/DomainSettings.php">
-              <i class="bi bi-circle"></i><span>Domain Settings</span>
-            </a>
-          </li>
         </ul>
       </li>
       
@@ -199,6 +194,16 @@
           <li>
             <a href="<?php echo $web_http_host; ?>/bc-spadmin/SendMail.php">
               <i class="bi bi-circle"></i><span>Send Mail</span>
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo $web_http_host; ?>/bc-spadmin/VendorRegistrations.php">
+              <i class="bi bi-circle"></i><span>Pending Registrations</span>
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo $web_http_host; ?>/bc-spadmin/DomainSettings.php">
+              <i class="bi bi-circle"></i><span>Domain Settings</span>
             </a>
           </li>
         </ul>
