@@ -198,8 +198,13 @@
         <div class="card info-card px-5 py-5">
           <div class="row mb-3">
             <span style="user-select: auto;" class="h4 fw-bold">PRODUCT INSTALLATION</span><br>
-            <div style="text-align: center; user-select: auto;" class="container">
-                <button type="button" class="btn btn-info col-12 mb-2" product-name-array="startimes,dstv,gotv" onclick="tickProduct(this, 'all', 'api-product-name', 'install-product', 'jpg');">SELECT ALL</button><br/>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="select-all-checkbox">
+                <label class="form-check-label" for="select-all-checkbox">
+                    Select All
+                </label>
+            </div>
+            <div id="product-image-container" style="text-align: center; user-select: auto;">
                 <img alt="Startimes" id="startimes-lg" product-name-array="startimes,dstv,gotv" src="/asset/startimes.jpg" onclick="tickProduct(this, 'startimes', 'api-product-name', 'install-product', 'jpg');" class="col-2 rounded-5 border m-1  "/>
                 <img alt="Dstv" id="dstv-lg" product-name-array="startimes,dstv,gotv" src="/asset/dstv.jpg" onclick="tickProduct(this, 'dstv', 'api-product-name', 'install-product', 'jpg');" class="col-2 rounded-5 border m-1 "/>
                 <img alt="Gotv" id="gotv-lg" product-name-array="startimes,dstv,gotv" src="/asset/gotv.jpg" onclick="tickProduct(this, 'gotv', 'api-product-name', 'install-product', 'jpg');" class="col-2 rounded-5 border m-1 "/>
@@ -401,5 +406,19 @@
     </section>
 	<?php include("../func/bc-admin-footer.php"); ?>
 	
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectAllCheckbox = document.getElementById('select-all-checkbox');
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('change', function () {
+                    // We need to pass a reference to one of the images so the function can find the container
+                    const anyImage = document.querySelector("img[product-name-array]");
+                    if (anyImage) {
+                        tickProduct(this, 'all', 'api-product-name', 'install-product', 'jpg');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

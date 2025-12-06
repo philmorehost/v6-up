@@ -204,7 +204,7 @@ $csv_price_level_array[] = "product_name,smart_level,agent_level,api_level";
                             Select All
                         </label>
                     </div>
-                    <div style="text-align: center; user-select: auto;" class="container">
+                    <div id="product-image-container" style="text-align: center; user-select: auto;">
 
                         <img alt="ekedc" id="ekedc-lg"
                             product-name-array="ekedc,eedc,ikedc,jedc,kedco,ibedc,phed,aedc,yedc,bedc,aba,kaedco"

@@ -130,10 +130,9 @@ function tickProduct(element, networkName, productID, buttonID, fileExt) {
     const installButton = document.getElementById(buttonID);
     const selectAllCheckbox = document.getElementById('select-all-checkbox');
 
-    // Find the container of the product images. This is more robust.
-    const imageContainer = document.querySelector('img[product-name-array]') ? document.querySelector('img[product-name-array]').closest('.container') : null;
+    // Use a more specific selector to find the container of the images
+    const imageContainer = document.getElementById('product-image-container');
     if (!imageContainer) {
-        // If there are no images, do nothing.
         installButton.style.pointerEvents = "none";
         if(selectAllCheckbox) selectAllCheckbox.checked = false;
         return;
