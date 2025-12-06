@@ -206,13 +206,8 @@ $csv_price_level_array[] = "product_name,smart_level,agent_level,api_level";
         <span style="user-select: auto;"
             class="h4 fw-bold">PRODUCT
             INSTALLATION</span><br>
-        <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" id="select-all-checkbox">
-            <label class="form-check-label" for="select-all-checkbox">
-                Select All
-            </label>
-        </div>
         <div id="product-image-container" style="text-align: center; user-select: auto;">
+            <button type="button" class="btn btn-info col-12 mb-2" product-name-array="msport,naijabet,nairabet,bet9ja-agent,betland,betlion,supabet,bet9ja,bangbet,betking,1xbet,betway,merrybet,mlotto,western-lotto,hallabet,green-lotto" onclick="tickProduct(this, 'all', 'api-product-name', 'install-product', 'jpg');">SELECT ALL</button><br/>
             <img alt="msport" id="msport-lg"
                 product-name-array="msport,naijabet,nairabet,bet9ja-agent,betland,betlion,supabet,bet9ja,bangbet,betking,1xbet,betway,merrybet,mlotto,western-lotto,hallabet,green-lotto"
                 src="/asset/msport.jpg"
@@ -533,20 +528,6 @@ $csv_price_level_array[] = "product_name,smart_level,agent_level,api_level";
 </section>
     <?php include("../func/bc-admin-footer.php"); ?>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const selectAllCheckbox = document.getElementById('select-all-checkbox');
-            if (selectAllCheckbox) {
-                selectAllCheckbox.addEventListener('change', function () {
-                    // We need to pass a reference to one of the images so the function can find the container
-                    const anyImage = document.querySelector("img[product-name-array]");
-                    if (anyImage) {
-                        tickProduct(this, 'all', 'api-product-name', 'install-product', 'jpg');
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>

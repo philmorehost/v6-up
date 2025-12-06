@@ -128,32 +128,20 @@
 function tickProduct(element, networkName, productID, buttonID, fileExt) {
     const productNameInput = document.getElementById(productID);
     const installButton = document.getElementById(buttonID);
-    const selectAllCheckbox = document.getElementById('select-all-checkbox');
-
-    // Use a more specific selector to find the container of the images
-    const imageContainer = document.getElementById('product-image-container');
-    if (!imageContainer) {
-        installButton.style.pointerEvents = "none";
-        if(selectAllCheckbox) selectAllCheckbox.checked = false;
-        return;
-    }
-
-    const allProductImages = imageContainer.querySelectorAll("img[product-name-array]");
-    const allProductNames = Array.from(allProductImages).map(img => img.alt);
+    const allProductNames = element.getAttribute("product-name-array").split(',');
 
     fileExt = fileExt || 'png';
 
     let selectedProducts = productNameInput.value ? productNameInput.value.split(',').filter(p => p) : [];
 
     if (networkName === 'all') {
-        // This logic is triggered by the 'Select All' checkbox
-        if (selectAllCheckbox && selectAllCheckbox.checked) {
-            selectedProducts = [...allProductNames];
-        } else {
+        // If all products are already selected, deselect them. Otherwise, select all.
+        if (selectedProducts.length === allProductNames.length) {
             selectedProducts = [];
+        } else {
+            selectedProducts = [...allProductNames];
         }
     } else {
-        // This logic is triggered by clicking a single product image
         const productIndex = selectedProducts.indexOf(networkName);
         if (productIndex > -1) {
             selectedProducts.splice(productIndex, 1);
@@ -162,7 +150,6 @@ function tickProduct(element, networkName, productID, buttonID, fileExt) {
         }
     }
 
-    // Update UI for all images based on the selectedProducts array
     allProductNames.forEach(name => {
         const imageElement = document.getElementById(name + "-lg");
         if (imageElement) {
@@ -176,15 +163,7 @@ function tickProduct(element, networkName, productID, buttonID, fileExt) {
         }
     });
 
-    // Synchronize the 'Select All' checkbox state
-    if (selectAllCheckbox) {
-        selectAllCheckbox.checked = selectedProducts.length === allProductNames.length && allProductNames.length > 0;
-    }
-
-    // Update the hidden input field with the list of selected products
     productNameInput.value = selectedProducts.join(',');
-
-    // Enable or disable the install button based on whether any products are selected
     installButton.style.pointerEvents = selectedProducts.length > 0 ? "auto" : "none";
 }
     
