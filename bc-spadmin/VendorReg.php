@@ -4,6 +4,26 @@
 	include("../func/bc-func.php");
 	include("../func/bc-tables.php");
 
+    // Fetch domain settings
+    $nameservers = '';
+    $ip_address = '';
+    $registrar_url = '';
+    $sql_fetch = "SELECT * FROM sas_super_admin_options WHERE option_name IN ('domain_nameservers', 'domain_ip_address', 'domain_registrar_url')";
+    $result = mysqli_query($connection_server, $sql_fetch);
+    if ($result) {
+        while($row = mysqli_fetch_assoc($result)) {
+            if($row['option_name'] == 'domain_nameservers') {
+                $nameservers = $row['option_value'];
+            }
+            if($row['option_name'] == 'domain_ip_address') {
+                $ip_address = $row['option_value'];
+            }
+            if($row['option_name'] == 'domain_registrar_url') {
+                $registrar_url = $row['option_value'];
+            }
+        }
+    }
+
     if(isset($_POST["create-profile"])){
         $first = mysqli_real_escape_string($connection_server, trim(strip_tags(ucwords($_POST["first"]))));
         $last = mysqli_real_escape_string($connection_server, trim(strip_tags(ucwords($_POST["last"]))));
@@ -190,6 +210,14 @@
                                             <input type="text" name="phone" class="form-control" required pattern="[0-9]{11}">
                                         </div>
                                         <div class="col-12">
+                                            <div class="alert alert-warning">
+                                                <strong>Domain Setup Instructions:</strong><br>
+                                                Please note that domain name registration is not free. You can register your domain through our suggested registrar: <a href="<?php echo htmlspecialchars($registrar_url); ?>" target="_blank"><?php echo htmlspecialchars($registrar_url); ?></a><br><br>
+                                                To point your domain to our servers, please use the following nameservers:<br>
+                                                <pre><?php echo htmlspecialchars($nameservers); ?></pre>
+                                                If you plan to use a subdomain, please create an A record pointing to the following IP address:<br>
+                                                <strong><?php echo htmlspecialchars($ip_address); ?></strong>
+                                            </div>
                                             <label class="form-label">Website URL (e.g., yoursite.com)</label>
                                             <input type="text" name="website-url" class="form-control" required>
                                         </div>
